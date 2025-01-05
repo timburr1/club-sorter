@@ -3,6 +3,7 @@ lines = []
 club_votes = dict()
 clubs_to_fill = ['Puzzle Club', 'Baseball Club', 'Minecraft Club', 'Spirit Club', 'Weight Lifting Club', 'Board Games Club', 'Basketball Club', 'Walking Club', 'Lego Club', 'Gaming Club', 'Volleyball Club', 'Movie Club (Not Disney)', 'DISNEY Movie Club', 'General Academic Support']
 
+# count the total number of votes for each club
 def count(input):
     global club_votes
 
@@ -28,6 +29,7 @@ def populate_club(club_name, lines):
 
     found = 0
     
+    # choices are in cols 5-7
     for i in range(5, 8):
         j = 0
         while j < len(lines):
