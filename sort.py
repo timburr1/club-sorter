@@ -48,7 +48,7 @@ def students_allowed(club_name):
 
 def populate_club(club_name, lines):
     m = students_allowed(club_name)
-    print('\n' + club_name + ':')
+    print('\n' + club_name + ':,,')
 
     found = 0
     
@@ -58,7 +58,7 @@ def populate_club(club_name, lines):
         while j < len(lines):
 
             if lines[j][i] == c:
-                print(lines[j][2] + ', ' + lines[j][3] + ' ' + lines[j][4])
+                print(lines[j][2] + ', ' + lines[j][3] + ',' + lines[j][4])
                 found += 1
                 lines = lines[:j] + lines[j+1:]
             else:
@@ -84,6 +84,6 @@ with open('votes.csv') as fp:
 for c in clubs_to_fill:
     lines = populate_club(c, lines)
 
-print('\nRemainder:')
+print('\nRemainder:,,')
 for l in lines:
-    print(l[2] + ', ' + l[3] + ' ' + l[4])
+    print(l[2] + ', ' + l[3] + ',' + l[4])
