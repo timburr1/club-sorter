@@ -1,28 +1,30 @@
 
 lines = []
 club_votes = dict()
-clubs_to_fill = ['Art Journaling - Use your creative side to respond to weekly prompts and explore your personal expression.  (25)',
-    'Baseball Club  (20)',
-    'Basketball Club (20)',
-    'Bingo Club (25)',
-    'Board Games Club  (20)',
-    'Book Club - Read and enjoy your own books.  (20)',
-    'Choir Club  (20)',
-    'Crochet Club  -  Learn to create fun projects with yarn and crotchet hooks. All levels invited.  (20)',
+# sorted from least to most popular:
+clubs_to_fill = [
     'Culture Club - Share your culture and  learn about other cultures. Student driven club!  (20)',
-    'Disney Movie Club  (40)',
-    'Four Square Club  (40)',
-    'Gaming Club  (20)',
-    'General Academic Support',
     'Green Team -  We work on environmentally friendly projects for our school like recycling and gardening.(20)',
-    'Jazz Club - View live jazz performances and discuss styles albums history trends etc.  (20)',
-    'Lego Club  (20)',
-    'Minecraft Club  (20)',
-    'Origami Club - Explore the ancient art of paper folding.  (20)',
-    'Puzzle Club  (20)',
+    'Choir Club  (20)',
     'Unity Club - A supportive space for students who are friendly to all diverse peers. (20)',
+    'Jazz Club - View live jazz performances and discuss styles albums history trends etc.  (20)',
+    'Bingo Club (25)',
+    'Book Club - Read and enjoy your own books.  (20)',
+    'Puzzle Club  (20)',
+    'Origami Club - Explore the ancient art of paper folding.  (20)',
+    'Art Journaling - Use your creative side to respond to weekly prompts and explore your personal expression.  (25)',
+    'Crochet Club  -  Learn to create fun projects with yarn and crotchet hooks. All levels invited.  (20)',
+    'Baseball Club  (20)',
+    'General Academic Support',
+    'Minecraft Club  (20)',    
+    'Four Square Club  (40)',
+    'Board Games Club  (20)',     
+    'Basketball Club (20)', 
+    'Gaming Club  (20)',    
     'Volleyball Club  (20)',
-    'Walking Club  (40)']
+    'Lego Club  (20)',
+    'Walking Club  (40)',
+    'Disney Movie Club  (40)']
 
 # count the total number of votes for each club
 def count(input):
@@ -38,22 +40,14 @@ def count(input):
             club_votes[i[j]] += 1
 
 def students_allowed(club_name):
-    if club_name == 'Basketball Club' or club_name == 'Walking Club':
+    if club_name.startswith('Disney Movie Club') or club_name.startswith('Four Square Club') or club_name.startswith('Walking Club'):
         return 40
-    if club_name == 'General Academic Support':
-        return 420
-    return 20
-
-def parse_students_allowed_from(club_name):
     if club_name.startswith('General Academic Support'):
         return 420
-    
-    a = club_name.split('(')
-    b = a[1].split(')')
-    return int(b[0])
+    return 16
 
 def populate_club(club_name, lines):
-    m = parse_students_allowed_from(club_name)
+    m = students_allowed(club_name)
     print('\n' + club_name + ':')
 
     found = 0
@@ -64,7 +58,7 @@ def populate_club(club_name, lines):
         while j < len(lines):
 
             if lines[j][i] == c:
-                print(','.join(lines[j]))
+                print(lines[j][2] + ', ' + lines[j][3] + ' ' + lines[j][4])
                 found += 1
                 lines = lines[:j] + lines[j+1:]
             else:
@@ -77,30 +71,19 @@ def populate_club(club_name, lines):
 
 with open('votes.csv') as fp:
     for line in fp:
-        # These clubs are already squared away:
-#        if line.count('Harry Potter') > 0 or line.count('Green Team') > 0 or line.count('Mindfulness Club') > 0 or line.count('Unity Club') > 0:
-#            continue
-#        if line.count('Book Club') > 0 or line.count('Crochet Club') > 0 or line.count('Jazz Band') > 0: 
-#            continue
-
         line = line.strip()
         count(line)
         lines.append(line.split(','))
 
-#print(lines)
-#print(club_votes)        
+# print(lines)
+# print(club_votes)        
 
-print(str(dict(sorted(club_votes.items(), key=lambda item: item[1]))))
-print('------------------------------------------------------------')
+# print(str(dict(sorted(club_votes.items(), key=lambda item: item[1]))))
+# print('------------------------------------------------------------')
 
 for c in clubs_to_fill:
     lines = populate_club(c, lines)
 
 print('\nRemainder:')
 for l in lines:
-    print(','.join(l))
-
-assert(parse_students_allowed_from('General Academic Support (like the current 9th Period)') == 420)
-assert(parse_students_allowed_from('Lego Club  (20)') == 20)
-assert(parse_students_allowed_from('Disney Movie Club  (40)') == 40)
-assert(parse_students_allowed_from('Art Journaling - Use your creative side to respond to weekly prompts and explore your personal expression.  (25)') == 25)
+    print(l[2] + ', ' + l[3] + ' ' + l[4])
